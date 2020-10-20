@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlm.bdp.mapper.NodeContentMapper" >
+  <resultMap id="BaseResultMap" type="com.dlm.bdp.pojo.NodeContent" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="content_type" property="contentType" jdbcType="INTEGER" />
+    <result column="show_type" property="showType" jdbcType="INTEGER" />
+    <result column="content_title" property="contentTitle" jdbcType="VARCHAR" />
+    <result column="order_number" property="orderNumber" jdbcType="INTEGER" />
+    <result column="node_id" property="nodeId" jdbcType="INTEGER" />
+    <result column="creater_id" property="createrId" jdbcType="INTEGER" />
+    <result column="audit_result" property="auditResult" jdbcType="INTEGER" />
+    <result column="style_name" property="styleName" jdbcType="VARCHAR" />
+    <result column="tpl_name" property="tplName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dlm.bdp.pojo.NodeContentWithBLOBs" extends="BaseResultMap" >
+    <result column="img_url" property="imgUrl" jdbcType="LONGVARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, content_type, show_type, content_title, order_number, node_id, creater_id, audit_result, 
+    style_name, tpl_name, create_time, update_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    img_url, content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.dlm.bdp.pojo.NodeContentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dlm.bdp.pojo.NodeContentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from node_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from node_content
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from node_content
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dlm.bdp.pojo.NodeContentExample" >
+    delete from node_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dlm.bdp.pojo.NodeContentWithBLOBs" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into node_content (content_type, show_type, content_title, 
+      order_number, node_id, creater_id, 
+      audit_result, style_name, tpl_name, 
+      create_time, update_time, img_url, 
+      content)
+    values (#{contentType,jdbcType=INTEGER}, #{showType,jdbcType=INTEGER}, #{contentTitle,jdbcType=VARCHAR}, 
+      #{orderNumber,jdbcType=INTEGER}, #{nodeId,jdbcType=INTEGER}, #{createrId,jdbcType=INTEGER}, 
+      #{auditResult,jdbcType=INTEGER}, #{styleName,jdbcType=VARCHAR}, #{tplName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{imgUrl,jdbcType=LONGVARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dlm.bdp.pojo.NodeContentWithBLOBs" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into node_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="contentType != null" >
+        content_type,
+      </if>
+      <if test="showType != null" >
+        show_type,
+      </if>
+      <if test="contentTitle != null" >
+        content_title,
+      </if>
+      <if test="orderNumber != null" >
+        order_number,
+      </if>
+      <if test="nodeId != null" >
+        node_id,
+      </if>
+      <if test="createrId != null" >
+        creater_id,
+      </if>
+      <if test="auditResult != null" >
+        audit_result,
+      </if>
+      <if test="styleName != null" >
+        style_name,
+      </if>
+      <if test="tplName != null" >
+        tpl_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="contentType != null" >
+        #{contentType,jdbcType=INTEGER},
+      </if>
+      <if test="showType != null" >
+        #{showType,jdbcType=INTEGER},
+      </if>
+      <if test="contentTitle != null" >
+        #{contentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=INTEGER},
+      </if>
+      <if test="nodeId != null" >
+        #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="createrId != null" >
+        #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="auditResult != null" >
+        #{auditResult,jdbcType=INTEGER},
+      </if>
+      <if test="styleName != null" >
+        #{styleName,jdbcType=VARCHAR},
+      </if>
+      <if test="tplName != null" >
+        #{tplName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dlm.bdp.pojo.NodeContentExample" resultType="java.lang.Integer" >
+    select count(*) from node_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update node_content
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.contentType != null" >
+        content_type = #{record.contentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.showType != null" >
+        show_type = #{record.showType,jdbcType=INTEGER},
+      </if>
+      <if test="record.contentTitle != null" >
+        content_title = #{record.contentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNumber != null" >
+        order_number = #{record.orderNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.nodeId != null" >
+        node_id = #{record.nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createrId != null" >
+        creater_id = #{record.createrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.auditResult != null" >
+        audit_result = #{record.auditResult,jdbcType=INTEGER},
+      </if>
+      <if test="record.styleName != null" >
+        style_name = #{record.styleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tplName != null" >
+        tpl_name = #{record.tplName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.imgUrl != null" >
+        img_url = #{record.imgUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update node_content
+    set id = #{record.id,jdbcType=INTEGER},
+      content_type = #{record.contentType,jdbcType=INTEGER},
+      show_type = #{record.showType,jdbcType=INTEGER},
+      content_title = #{record.contentTitle,jdbcType=VARCHAR},
+      order_number = #{record.orderNumber,jdbcType=INTEGER},
+      node_id = #{record.nodeId,jdbcType=INTEGER},
+      creater_id = #{record.createrId,jdbcType=INTEGER},
+      audit_result = #{record.auditResult,jdbcType=INTEGER},
+      style_name = #{record.styleName,jdbcType=VARCHAR},
+      tpl_name = #{record.tplName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      img_url = #{record.imgUrl,jdbcType=LONGVARCHAR},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update node_content
+    set id = #{record.id,jdbcType=INTEGER},
+      content_type = #{record.contentType,jdbcType=INTEGER},
+      show_type = #{record.showType,jdbcType=INTEGER},
+      content_title = #{record.contentTitle,jdbcType=VARCHAR},
+      order_number = #{record.orderNumber,jdbcType=INTEGER},
+      node_id = #{record.nodeId,jdbcType=INTEGER},
+      creater_id = #{record.createrId,jdbcType=INTEGER},
+      audit_result = #{record.auditResult,jdbcType=INTEGER},
+      style_name = #{record.styleName,jdbcType=VARCHAR},
+      tpl_name = #{record.tplName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dlm.bdp.pojo.NodeContentWithBLOBs" >
+    update node_content
+    <set >
+      <if test="contentType != null" >
+        content_type = #{contentType,jdbcType=INTEGER},
+      </if>
+      <if test="showType != null" >
+        show_type = #{showType,jdbcType=INTEGER},
+      </if>
+      <if test="contentTitle != null" >
+        content_title = #{contentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null" >
+        order_number = #{orderNumber,jdbcType=INTEGER},
+      </if>
+      <if test="nodeId != null" >
+        node_id = #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="createrId != null" >
+        creater_id = #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="auditResult != null" >
+        audit_result = #{auditResult,jdbcType=INTEGER},
+      </if>
+      <if test="styleName != null" >
+        style_name = #{styleName,jdbcType=VARCHAR},
+      </if>
+      <if test="tplName != null" >
+        tpl_name = #{tplName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dlm.bdp.pojo.NodeContentWithBLOBs" >
+    update node_content
+    set content_type = #{contentType,jdbcType=INTEGER},
+      show_type = #{showType,jdbcType=INTEGER},
+      content_title = #{contentTitle,jdbcType=VARCHAR},
+      order_number = #{orderNumber,jdbcType=INTEGER},
+      node_id = #{nodeId,jdbcType=INTEGER},
+      creater_id = #{createrId,jdbcType=INTEGER},
+      audit_result = #{auditResult,jdbcType=INTEGER},
+      style_name = #{styleName,jdbcType=VARCHAR},
+      tpl_name = #{tplName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      img_url = #{imgUrl,jdbcType=LONGVARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dlm.bdp.pojo.NodeContent" >
+    update node_content
+    set content_type = #{contentType,jdbcType=INTEGER},
+      show_type = #{showType,jdbcType=INTEGER},
+      content_title = #{contentTitle,jdbcType=VARCHAR},
+      order_number = #{orderNumber,jdbcType=INTEGER},
+      node_id = #{nodeId,jdbcType=INTEGER},
+      creater_id = #{createrId,jdbcType=INTEGER},
+      audit_result = #{auditResult,jdbcType=INTEGER},
+      style_name = #{styleName,jdbcType=VARCHAR},
+      tpl_name = #{tplName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

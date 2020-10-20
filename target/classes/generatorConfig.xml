@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+ 
+    <context id="DB2Tables"    targetRuntime="MyBatis3">
+        <!--避免生成重复代码的插件-->
+        <plugin type="com.dlm.bdp.util.OverIsMergeablePlugin" />
+ 
+        <!--是否在代码中显示注释-->
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+ 
+        <!--数据库链接地址账号密码-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" 
+        				connectionURL="jdbc:mysql://120.78.83.159:3306/bdp" 
+        				userId="root" 
+        				password="Aa1234">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+        <!--生成pojo类存放位置-->
+        <javaModelGenerator targetPackage="com.dlm.bdp.pojo" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--生成xml映射文件存放位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--生成mapper类存放位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.dlm.bdp.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+ 
+        <!--生成对应表及类名-->
+        <!-- <table tableName="clan_member" domainObjectName="ClanMember" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="clan_member_id" sqlStatement="MySQL" identity="true"/>
+        </table> -->          
+
+        <table tableName="family_info" domainObjectName="FamilyInfo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="surname_info" domainObjectName="SurnameInfo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="area_info" domainObjectName="AreaInfo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="area_id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        
+        <table tableName="family_service" domainObjectName="FamilyService" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="service_center" domainObjectName="ServiceCenter" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        
+        <table tableName="family_setting" domainObjectName="FamilySetting" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="keywords_config" domainObjectName="KeywordsConfig" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="teletext_type" domainObjectName="TeletextType" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="teletext_center" domainObjectName="TeletextCenter" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="teletext_info" domainObjectName="TeletextInfo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="node" domainObjectName="Node" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="node_content" domainObjectName="NodeContent" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="relationship_call" domainObjectName="RelationshipCall" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table tableName="dictionary" domainObjectName="Dictionary" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="my.isgen.usekeys" value="true"/>
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlm.bdp.mapper.DictionaryMapper" >
+  <resultMap id="BaseResultMap" type="com.dlm.bdp.pojo.Dictionary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="unicode" property="unicode" jdbcType="VARCHAR" />
+    <result column="spell" property="spell" jdbcType="VARCHAR" />
+    <result column="pronounce" property="pronounce" jdbcType="VARCHAR" />
+    <result column="stroke" property="stroke" jdbcType="VARCHAR" />
+    <result column="stroke_order" property="strokeOrder" jdbcType="VARCHAR" />
+    <result column="radical_stroke" property="radicalStroke" jdbcType="VARCHAR" />
+    <result column="radical" property="radical" jdbcType="VARCHAR" />
+    <result column="construct" property="construct" jdbcType="VARCHAR" />
+    <result column="construct_spell" property="constructSpell" jdbcType="VARCHAR" />
+    <result column="unnormal_construct" property="unnormalConstruct" jdbcType="VARCHAR" />
+    <result column="explanation" property="explanation" jdbcType="VARCHAR" />
+    <result column="font_type" property="fontType" jdbcType="VARCHAR" />
+    <result column="mapping" property="mapping" jdbcType="VARCHAR" />
+    <result column="mapping_stroke" property="mappingStroke" jdbcType="VARCHAR" />
+    <result column="mapping_radical_stroke" property="mappingRadicalStroke" jdbcType="VARCHAR" />
+    <result column="mapping_radical" property="mappingRadical" jdbcType="VARCHAR" />
+    <result column="normal" property="normal" jdbcType="INTEGER" />
+    <result column="name_subject" property="nameSubject" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, img_url, unicode, spell, pronounce, stroke, stroke_order, radical_stroke, radical, 
+    construct, construct_spell, unnormal_construct, explanation, font_type, mapping, 
+    mapping_stroke, mapping_radical_stroke, mapping_radical, normal, name_subject, create_time, 
+    update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dlm.bdp.pojo.DictionaryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from dictionary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dictionary
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dlm.bdp.pojo.DictionaryExample" >
+    delete from dictionary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dlm.bdp.pojo.Dictionary" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dictionary (img_url, unicode, spell, 
+      pronounce, stroke, stroke_order, 
+      radical_stroke, radical, construct, 
+      construct_spell, unnormal_construct, explanation, 
+      font_type, mapping, mapping_stroke, 
+      mapping_radical_stroke, mapping_radical, normal, 
+      name_subject, create_time, update_time
+      )
+    values (#{imgUrl,jdbcType=VARCHAR}, #{unicode,jdbcType=VARCHAR}, #{spell,jdbcType=VARCHAR}, 
+      #{pronounce,jdbcType=VARCHAR}, #{stroke,jdbcType=VARCHAR}, #{strokeOrder,jdbcType=VARCHAR}, 
+      #{radicalStroke,jdbcType=VARCHAR}, #{radical,jdbcType=VARCHAR}, #{construct,jdbcType=VARCHAR}, 
+      #{constructSpell,jdbcType=VARCHAR}, #{unnormalConstruct,jdbcType=VARCHAR}, #{explanation,jdbcType=VARCHAR}, 
+      #{fontType,jdbcType=VARCHAR}, #{mapping,jdbcType=VARCHAR}, #{mappingStroke,jdbcType=VARCHAR}, 
+      #{mappingRadicalStroke,jdbcType=VARCHAR}, #{mappingRadical,jdbcType=VARCHAR}, #{normal,jdbcType=INTEGER}, 
+      #{nameSubject,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dlm.bdp.pojo.Dictionary" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dictionary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="unicode != null" >
+        unicode,
+      </if>
+      <if test="spell != null" >
+        spell,
+      </if>
+      <if test="pronounce != null" >
+        pronounce,
+      </if>
+      <if test="stroke != null" >
+        stroke,
+      </if>
+      <if test="strokeOrder != null" >
+        stroke_order,
+      </if>
+      <if test="radicalStroke != null" >
+        radical_stroke,
+      </if>
+      <if test="radical != null" >
+        radical,
+      </if>
+      <if test="construct != null" >
+        construct,
+      </if>
+      <if test="constructSpell != null" >
+        construct_spell,
+      </if>
+      <if test="unnormalConstruct != null" >
+        unnormal_construct,
+      </if>
+      <if test="explanation != null" >
+        explanation,
+      </if>
+      <if test="fontType != null" >
+        font_type,
+      </if>
+      <if test="mapping != null" >
+        mapping,
+      </if>
+      <if test="mappingStroke != null" >
+        mapping_stroke,
+      </if>
+      <if test="mappingRadicalStroke != null" >
+        mapping_radical_stroke,
+      </if>
+      <if test="mappingRadical != null" >
+        mapping_radical,
+      </if>
+      <if test="normal != null" >
+        normal,
+      </if>
+      <if test="nameSubject != null" >
+        name_subject,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="unicode != null" >
+        #{unicode,jdbcType=VARCHAR},
+      </if>
+      <if test="spell != null" >
+        #{spell,jdbcType=VARCHAR},
+      </if>
+      <if test="pronounce != null" >
+        #{pronounce,jdbcType=VARCHAR},
+      </if>
+      <if test="stroke != null" >
+        #{stroke,jdbcType=VARCHAR},
+      </if>
+      <if test="strokeOrder != null" >
+        #{strokeOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="radicalStroke != null" >
+        #{radicalStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="radical != null" >
+        #{radical,jdbcType=VARCHAR},
+      </if>
+      <if test="construct != null" >
+        #{construct,jdbcType=VARCHAR},
+      </if>
+      <if test="constructSpell != null" >
+        #{constructSpell,jdbcType=VARCHAR},
+      </if>
+      <if test="unnormalConstruct != null" >
+        #{unnormalConstruct,jdbcType=VARCHAR},
+      </if>
+      <if test="explanation != null" >
+        #{explanation,jdbcType=VARCHAR},
+      </if>
+      <if test="fontType != null" >
+        #{fontType,jdbcType=VARCHAR},
+      </if>
+      <if test="mapping != null" >
+        #{mapping,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingStroke != null" >
+        #{mappingStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingRadicalStroke != null" >
+        #{mappingRadicalStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingRadical != null" >
+        #{mappingRadical,jdbcType=VARCHAR},
+      </if>
+      <if test="normal != null" >
+        #{normal,jdbcType=INTEGER},
+      </if>
+      <if test="nameSubject != null" >
+        #{nameSubject,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dlm.bdp.pojo.DictionaryExample" resultType="java.lang.Integer" >
+    select count(*) from dictionary
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dictionary
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgUrl != null" >
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unicode != null" >
+        unicode = #{record.unicode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spell != null" >
+        spell = #{record.spell,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pronounce != null" >
+        pronounce = #{record.pronounce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stroke != null" >
+        stroke = #{record.stroke,jdbcType=VARCHAR},
+      </if>
+      <if test="record.strokeOrder != null" >
+        stroke_order = #{record.strokeOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.radicalStroke != null" >
+        radical_stroke = #{record.radicalStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="record.radical != null" >
+        radical = #{record.radical,jdbcType=VARCHAR},
+      </if>
+      <if test="record.construct != null" >
+        construct = #{record.construct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.constructSpell != null" >
+        construct_spell = #{record.constructSpell,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unnormalConstruct != null" >
+        unnormal_construct = #{record.unnormalConstruct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.explanation != null" >
+        explanation = #{record.explanation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fontType != null" >
+        font_type = #{record.fontType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mapping != null" >
+        mapping = #{record.mapping,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mappingStroke != null" >
+        mapping_stroke = #{record.mappingStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mappingRadicalStroke != null" >
+        mapping_radical_stroke = #{record.mappingRadicalStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mappingRadical != null" >
+        mapping_radical = #{record.mappingRadical,jdbcType=VARCHAR},
+      </if>
+      <if test="record.normal != null" >
+        normal = #{record.normal,jdbcType=INTEGER},
+      </if>
+      <if test="record.nameSubject != null" >
+        name_subject = #{record.nameSubject,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dictionary
+    set id = #{record.id,jdbcType=INTEGER},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      unicode = #{record.unicode,jdbcType=VARCHAR},
+      spell = #{record.spell,jdbcType=VARCHAR},
+      pronounce = #{record.pronounce,jdbcType=VARCHAR},
+      stroke = #{record.stroke,jdbcType=VARCHAR},
+      stroke_order = #{record.strokeOrder,jdbcType=VARCHAR},
+      radical_stroke = #{record.radicalStroke,jdbcType=VARCHAR},
+      radical = #{record.radical,jdbcType=VARCHAR},
+      construct = #{record.construct,jdbcType=VARCHAR},
+      construct_spell = #{record.constructSpell,jdbcType=VARCHAR},
+      unnormal_construct = #{record.unnormalConstruct,jdbcType=VARCHAR},
+      explanation = #{record.explanation,jdbcType=VARCHAR},
+      font_type = #{record.fontType,jdbcType=VARCHAR},
+      mapping = #{record.mapping,jdbcType=VARCHAR},
+      mapping_stroke = #{record.mappingStroke,jdbcType=VARCHAR},
+      mapping_radical_stroke = #{record.mappingRadicalStroke,jdbcType=VARCHAR},
+      mapping_radical = #{record.mappingRadical,jdbcType=VARCHAR},
+      normal = #{record.normal,jdbcType=INTEGER},
+      name_subject = #{record.nameSubject,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dlm.bdp.pojo.Dictionary" >
+    update dictionary
+    <set >
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="unicode != null" >
+        unicode = #{unicode,jdbcType=VARCHAR},
+      </if>
+      <if test="spell != null" >
+        spell = #{spell,jdbcType=VARCHAR},
+      </if>
+      <if test="pronounce != null" >
+        pronounce = #{pronounce,jdbcType=VARCHAR},
+      </if>
+      <if test="stroke != null" >
+        stroke = #{stroke,jdbcType=VARCHAR},
+      </if>
+      <if test="strokeOrder != null" >
+        stroke_order = #{strokeOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="radicalStroke != null" >
+        radical_stroke = #{radicalStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="radical != null" >
+        radical = #{radical,jdbcType=VARCHAR},
+      </if>
+      <if test="construct != null" >
+        construct = #{construct,jdbcType=VARCHAR},
+      </if>
+      <if test="constructSpell != null" >
+        construct_spell = #{constructSpell,jdbcType=VARCHAR},
+      </if>
+      <if test="unnormalConstruct != null" >
+        unnormal_construct = #{unnormalConstruct,jdbcType=VARCHAR},
+      </if>
+      <if test="explanation != null" >
+        explanation = #{explanation,jdbcType=VARCHAR},
+      </if>
+      <if test="fontType != null" >
+        font_type = #{fontType,jdbcType=VARCHAR},
+      </if>
+      <if test="mapping != null" >
+        mapping = #{mapping,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingStroke != null" >
+        mapping_stroke = #{mappingStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingRadicalStroke != null" >
+        mapping_radical_stroke = #{mappingRadicalStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingRadical != null" >
+        mapping_radical = #{mappingRadical,jdbcType=VARCHAR},
+      </if>
+      <if test="normal != null" >
+        normal = #{normal,jdbcType=INTEGER},
+      </if>
+      <if test="nameSubject != null" >
+        name_subject = #{nameSubject,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dlm.bdp.pojo.Dictionary" >
+    update dictionary
+    set img_url = #{imgUrl,jdbcType=VARCHAR},
+      unicode = #{unicode,jdbcType=VARCHAR},
+      spell = #{spell,jdbcType=VARCHAR},
+      pronounce = #{pronounce,jdbcType=VARCHAR},
+      stroke = #{stroke,jdbcType=VARCHAR},
+      stroke_order = #{strokeOrder,jdbcType=VARCHAR},
+      radical_stroke = #{radicalStroke,jdbcType=VARCHAR},
+      radical = #{radical,jdbcType=VARCHAR},
+      construct = #{construct,jdbcType=VARCHAR},
+      construct_spell = #{constructSpell,jdbcType=VARCHAR},
+      unnormal_construct = #{unnormalConstruct,jdbcType=VARCHAR},
+      explanation = #{explanation,jdbcType=VARCHAR},
+      font_type = #{fontType,jdbcType=VARCHAR},
+      mapping = #{mapping,jdbcType=VARCHAR},
+      mapping_stroke = #{mappingStroke,jdbcType=VARCHAR},
+      mapping_radical_stroke = #{mappingRadicalStroke,jdbcType=VARCHAR},
+      mapping_radical = #{mappingRadical,jdbcType=VARCHAR},
+      normal = #{normal,jdbcType=INTEGER},
+      name_subject = #{nameSubject,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

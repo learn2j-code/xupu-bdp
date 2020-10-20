@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlm.bdp.mapper.NodeMapper" >
+  <resultMap id="BaseResultMap" type="com.dlm.bdp.pojo.Node" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+    <result column="cover" property="cover" jdbcType="VARCHAR" />
+    <result column="node_type_id" property="nodeTypeId" jdbcType="INTEGER" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="section_id" property="sectionId" jdbcType="INTEGER" />
+    <result column="catalogue_id" property="catalogueId" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="INTEGER" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="online_time" property="onlineTime" jdbcType="VARCHAR" />
+    <result column="view_count" property="viewCount" jdbcType="INTEGER" />
+    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="creater_id" property="createrId" jdbcType="INTEGER" />
+    <result column="audit_result" property="auditResult" jdbcType="INTEGER" />
+    <result column="style_name" property="styleName" jdbcType="VARCHAR" />
+    <result column="tpl_name" property="tplName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="img_title" property="imgTitle" jdbcType="VARCHAR" />
+    <result column="title_type" property="titleType" jdbcType="INTEGER" />
+    <result column="inscribe" property="inscribe" jdbcType="VARCHAR" />
+    <result column="inscribe_time" property="inscribeTime" jdbcType="VARCHAR" />
+    <result column="inscribe_style" property="inscribeStyle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, sub_title, cover, node_type_id, keyword, summary, section_id, catalogue_id, 
+    book_id, author, online_time, view_count, comment_count, creater_id, audit_result, 
+    style_name, tpl_name, create_time, update_time, img_title, title_type, inscribe, 
+    inscribe_time, inscribe_style
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dlm.bdp.pojo.NodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from node
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from node
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from node
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dlm.bdp.pojo.NodeExample" >
+    delete from node
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dlm.bdp.pojo.Node" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into node (title, sub_title, cover, 
+      node_type_id, keyword, summary, 
+      section_id, catalogue_id, book_id, 
+      author, online_time, view_count, 
+      comment_count, creater_id, audit_result, 
+      style_name, tpl_name, create_time, 
+      update_time, img_title, title_type, 
+      inscribe, inscribe_time, inscribe_style
+      )
+    values (#{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, 
+      #{nodeTypeId,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{sectionId,jdbcType=INTEGER}, #{catalogueId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, 
+      #{author,jdbcType=VARCHAR}, #{onlineTime,jdbcType=VARCHAR}, #{viewCount,jdbcType=INTEGER}, 
+      #{commentCount,jdbcType=INTEGER}, #{createrId,jdbcType=INTEGER}, #{auditResult,jdbcType=INTEGER}, 
+      #{styleName,jdbcType=VARCHAR}, #{tplName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{imgTitle,jdbcType=VARCHAR}, #{titleType,jdbcType=INTEGER}, 
+      #{inscribe,jdbcType=VARCHAR}, #{inscribeTime,jdbcType=VARCHAR}, #{inscribeStyle,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dlm.bdp.pojo.Node" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subTitle != null" >
+        sub_title,
+      </if>
+      <if test="cover != null" >
+        cover,
+      </if>
+      <if test="nodeTypeId != null" >
+        node_type_id,
+      </if>
+      <if test="keyword != null" >
+        keyword,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="sectionId != null" >
+        section_id,
+      </if>
+      <if test="catalogueId != null" >
+        catalogue_id,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="onlineTime != null" >
+        online_time,
+      </if>
+      <if test="viewCount != null" >
+        view_count,
+      </if>
+      <if test="commentCount != null" >
+        comment_count,
+      </if>
+      <if test="createrId != null" >
+        creater_id,
+      </if>
+      <if test="auditResult != null" >
+        audit_result,
+      </if>
+      <if test="styleName != null" >
+        style_name,
+      </if>
+      <if test="tplName != null" >
+        tpl_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="imgTitle != null" >
+        img_title,
+      </if>
+      <if test="titleType != null" >
+        title_type,
+      </if>
+      <if test="inscribe != null" >
+        inscribe,
+      </if>
+      <if test="inscribeTime != null" >
+        inscribe_time,
+      </if>
+      <if test="inscribeStyle != null" >
+        inscribe_style,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null" >
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeTypeId != null" >
+        #{nodeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="keyword != null" >
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="catalogueId != null" >
+        #{catalogueId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineTime != null" >
+        #{onlineTime,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount != null" >
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null" >
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="createrId != null" >
+        #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="auditResult != null" >
+        #{auditResult,jdbcType=INTEGER},
+      </if>
+      <if test="styleName != null" >
+        #{styleName,jdbcType=VARCHAR},
+      </if>
+      <if test="tplName != null" >
+        #{tplName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imgTitle != null" >
+        #{imgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="titleType != null" >
+        #{titleType,jdbcType=INTEGER},
+      </if>
+      <if test="inscribe != null" >
+        #{inscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="inscribeTime != null" >
+        #{inscribeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="inscribeStyle != null" >
+        #{inscribeStyle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dlm.bdp.pojo.NodeExample" resultType="java.lang.Integer" >
+    select count(*) from node
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update node
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subTitle != null" >
+        sub_title = #{record.subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cover != null" >
+        cover = #{record.cover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nodeTypeId != null" >
+        node_type_id = #{record.nodeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.keyword != null" >
+        keyword = #{record.keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.summary != null" >
+        summary = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sectionId != null" >
+        section_id = #{record.sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.catalogueId != null" >
+        catalogue_id = #{record.catalogueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookId != null" >
+        book_id = #{record.bookId,jdbcType=INTEGER},
+      </if>
+      <if test="record.author != null" >
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.onlineTime != null" >
+        online_time = #{record.onlineTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.viewCount != null" >
+        view_count = #{record.viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentCount != null" >
+        comment_count = #{record.commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.createrId != null" >
+        creater_id = #{record.createrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.auditResult != null" >
+        audit_result = #{record.auditResult,jdbcType=INTEGER},
+      </if>
+      <if test="record.styleName != null" >
+        style_name = #{record.styleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tplName != null" >
+        tpl_name = #{record.tplName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.imgTitle != null" >
+        img_title = #{record.imgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleType != null" >
+        title_type = #{record.titleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.inscribe != null" >
+        inscribe = #{record.inscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inscribeTime != null" >
+        inscribe_time = #{record.inscribeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inscribeStyle != null" >
+        inscribe_style = #{record.inscribeStyle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update node
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      sub_title = #{record.subTitle,jdbcType=VARCHAR},
+      cover = #{record.cover,jdbcType=VARCHAR},
+      node_type_id = #{record.nodeTypeId,jdbcType=INTEGER},
+      keyword = #{record.keyword,jdbcType=VARCHAR},
+      summary = #{record.summary,jdbcType=VARCHAR},
+      section_id = #{record.sectionId,jdbcType=INTEGER},
+      catalogue_id = #{record.catalogueId,jdbcType=INTEGER},
+      book_id = #{record.bookId,jdbcType=INTEGER},
+      author = #{record.author,jdbcType=VARCHAR},
+      online_time = #{record.onlineTime,jdbcType=VARCHAR},
+      view_count = #{record.viewCount,jdbcType=INTEGER},
+      comment_count = #{record.commentCount,jdbcType=INTEGER},
+      creater_id = #{record.createrId,jdbcType=INTEGER},
+      audit_result = #{record.auditResult,jdbcType=INTEGER},
+      style_name = #{record.styleName,jdbcType=VARCHAR},
+      tpl_name = #{record.tplName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      img_title = #{record.imgTitle,jdbcType=VARCHAR},
+      title_type = #{record.titleType,jdbcType=INTEGER},
+      inscribe = #{record.inscribe,jdbcType=VARCHAR},
+      inscribe_time = #{record.inscribeTime,jdbcType=VARCHAR},
+      inscribe_style = #{record.inscribeStyle,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dlm.bdp.pojo.Node" >
+    update node
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        sub_title = #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null" >
+        cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeTypeId != null" >
+        node_type_id = #{nodeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="keyword != null" >
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionId != null" >
+        section_id = #{sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="catalogueId != null" >
+        catalogue_id = #{catalogueId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineTime != null" >
+        online_time = #{onlineTime,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount != null" >
+        view_count = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null" >
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="createrId != null" >
+        creater_id = #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="auditResult != null" >
+        audit_result = #{auditResult,jdbcType=INTEGER},
+      </if>
+      <if test="styleName != null" >
+        style_name = #{styleName,jdbcType=VARCHAR},
+      </if>
+      <if test="tplName != null" >
+        tpl_name = #{tplName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="imgTitle != null" >
+        img_title = #{imgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="titleType != null" >
+        title_type = #{titleType,jdbcType=INTEGER},
+      </if>
+      <if test="inscribe != null" >
+        inscribe = #{inscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="inscribeTime != null" >
+        inscribe_time = #{inscribeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="inscribeStyle != null" >
+        inscribe_style = #{inscribeStyle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dlm.bdp.pojo.Node" >
+    update node
+    set title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
+      node_type_id = #{nodeTypeId,jdbcType=INTEGER},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      section_id = #{sectionId,jdbcType=INTEGER},
+      catalogue_id = #{catalogueId,jdbcType=INTEGER},
+      book_id = #{bookId,jdbcType=INTEGER},
+      author = #{author,jdbcType=VARCHAR},
+      online_time = #{onlineTime,jdbcType=VARCHAR},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      creater_id = #{createrId,jdbcType=INTEGER},
+      audit_result = #{auditResult,jdbcType=INTEGER},
+      style_name = #{styleName,jdbcType=VARCHAR},
+      tpl_name = #{tplName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      img_title = #{imgTitle,jdbcType=VARCHAR},
+      title_type = #{titleType,jdbcType=INTEGER},
+      inscribe = #{inscribe,jdbcType=VARCHAR},
+      inscribe_time = #{inscribeTime,jdbcType=VARCHAR},
+      inscribe_style = #{inscribeStyle,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
